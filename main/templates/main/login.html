@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>Login</h1>
+    </div>
+    <div class="container pt-3 col-2">
+    <center>
+    
+    <form method="POST" class="">
+        {% csrf_token %}
+       <div class="form-group">
+            {{ form.username.label }}:
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }}:
+            {{ form.password }}
+        </div>
+        <div class="form-group">
+            <input type="submit" class="login-input btn btn-warning" value="Login!" />
+        </div>
+    </form>
+    {% include 'main/includes/messages.html' %}
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+</center>
+</div>
+
+
+{% endblock content %}
