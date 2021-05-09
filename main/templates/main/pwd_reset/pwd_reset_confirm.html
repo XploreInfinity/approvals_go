@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container pt-5">
+
+    <h2>Enter new password</h2>
+    <p>Please enter your new password twice so we can verify you typed it in correctly.</p>
+    <form method="POST" >
+        {% csrf_token %}
+        <fieldset class="form-group">
+        {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-info" value="Change My Password" />
+            <a href="{% url 'login' %}" class="btn btn-outline-secondary">Cancel </a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

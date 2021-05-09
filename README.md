@@ -1,4 +1,4 @@
-#Classroom GO
+*Classroom GO*\
 *All setup has already been done. Run the following to enable the app:*\
 *First enable the virtual env. In the main project directory(that is this directory):*\
 `source django_env/bin/activate`
@@ -10,4 +10,5 @@
 `deactivate`\
 
 **Note:**\
-**No modification have been made yet.This is just a vanilla django-app template**
+**SECURITY KEY IS NOT INCLUDED. CHANGE PASSWORD RESET EMAIL CREDENTIALS IN `settings.py`    BEFORE USE**\
+**This is an Alpha build :)**

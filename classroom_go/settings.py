@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ""
+SECRET_KEY = ""#*add your own key here please :)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #*our additions:
-    'main.apps.MainConfig'
+    'main.apps.MainConfig',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -125,7 +126,8 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+#*use Bootstrap 4 with crispy forms:
+CRISPY_TEMPLATE_PACK='bootstrap4'
 #*Redirect to the home page after login:
 LOGIN_REDIRECT_URL='home'
 #*The url to login:
@@ -140,3 +142,18 @@ MESSAGE_TAGS = {
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',
  }
+
+#*File upload settings:accepting pdf upto 100Mb in size
+CONTENT_TYPES=['pdf']
+MAX_UPLOAD_SIZE="104857600"
+
+
+#*Django password reset fields for reset-password functionality
+#!NEVER USE THESE CREDENTIALS IN A REAL PRODUCTION SYSTEM.EVER.
+#!ALSO,INSTEAD OF USING PLAIN STRING VALUES FOR EMAIL AND PASSWORD,USE YOUR OS's ENVIRONMENT VARIABLES INSTEAD
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'help.passwrd.reset@gmail.com'
+EMAIL_HOST_PASSWORD = 'P@55wOrDrE5eT_in5eCure'
