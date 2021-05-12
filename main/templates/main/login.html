@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="jumbotron">
-        <h1>Login</h1>
+        <h1 class="font-robotobold loginh1">Login</h1>
     </div>
-    <div class="container">
+    <div class="container form-style font-fjalla">
 
     
     <form method="POST">
@@ -12,8 +12,8 @@
        <fieldset class="form-group">
            {{ form|crispy }}
        </fieldset>
-        <div class="form-group">
-            <input type="submit" class="login-input btn btn-warning" value="Login!" />
+        <div class="form-group login-button">
+            <input type="submit" class="login-input btn btn-lg btn-warning" value="Login!" />
         </div>
     </form>
     {% include 'main/includes/messages.html' %}
