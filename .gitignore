@@ -1,4 +1,4 @@
-django_env
 .vscode
 classroom_go/__pycache__
 main/__pycache__
+django_env

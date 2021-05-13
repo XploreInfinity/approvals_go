@@ -1,4 +1,5 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% block content %}
 <div class='container pt-5'>
 {% include 'main/includes/messages.html' %}
@@ -11,8 +12,8 @@
             </div>
             <h2><a class="article-title" href="{% url 'view-post' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.description }}</p>
-            <a href="#" class="article-title">
-                <img class="article-img" src="main/img/pdf_ico.png" alt="PDF file" />
+            <a href="{{ post.PDFfile.url }}" target="blank" class="article-title">
+                <img class="article-img" src="{% static 'main/img/pdf_ico.png' %}" alt="PDF file" />
                 {{ post.PDFfile }}
             </a>
           </div>

@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import prevent_relogin,allowed_users
+from django.http import HttpResponse
 #*Create your views here.
 @login_required
 @allowed_users(['HOD','faculty'])
@@ -102,3 +103,17 @@ class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         if self.request.user==post.author or self.request.user.groups.all()[0].name=='HOD':
             return True
         return False
+class DocDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
+    model=Post
+    template_name='main/doc_detail.html'
+    def test_func(self):
+        post=self.get_object()
+        if self.request.user==post.author or self.request.user.groups.all()[0].name=='HOD':
+            return True
+        return False
+
+#*
+def PostActions(request):
+    if request.topple:
+        return  HttpResponse('<h1>Topple them!ye!</h1>')
+    return HttpResponse('No')

@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
+{% load static %}
 {% block content %}
 <div class='container pt-5'>
-{% include 'main/includes/messages.html' %}
 {% include 'main/includes/messages.html' %}
         <article class="media content-section">
           <div class="media-body">
@@ -11,13 +11,17 @@
             </div>
             <h2><a class="article-title" href="#">{{ object.title }}</a></h2>
             <p class="article-content">{{ object.description }}</p>
-            <a href="#" class="article-title">
-                <img class="article-img" src="main/img/pdf_ico.png" alt="PDF file" />
+            <a href="{{ object.PDFfile.url }}" target="blank" class="article-title">
+                <img class="article-img" src="{% static 'main/img/pdf_ico.png' %}" alt="PDF file" />
                 {{ object.PDFfile }}
             </a>
           </div>
         </article>
+        {% ifequal request.user object.author %}
         <a class="btn btn-outline-info" href="{% url 'update-post' object.id %}">Update</a>
+        {% endifequal %}
+        <a class="btn btn-outline-success" href="{% url 'delete-post' object.id %}">Approve</a>
+        <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Reject</a>
         <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Delete</a>
         
 </div>

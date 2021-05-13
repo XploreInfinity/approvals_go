@@ -13,7 +13,9 @@ urlpatterns=[
     path('post/<int:pk>/update/',views.PostUpdateView.as_view(),name='update-post'),
     path('post/<int:pk>/delete/',views.PostDeleteView.as_view(),name='delete-post'),
     path('showhome',views.PostListView.as_view(),name='some-home'),
-
+    
+    path('document/<int:pk>/',views.DocDetailView.as_view(),name='view-doc'),
+    path('some',views.PostActions,name='lol'),
 
     path('pass_reset/',auth_views.PasswordResetView.as_view(template_name='main/pwd_reset/pwd_reset.html'),name='pwd_reset'),
     path('pass_reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='main/pwd_reset/pwd_reset_done.html'),name='password_reset_done'),

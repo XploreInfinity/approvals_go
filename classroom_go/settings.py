@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ""#*add your own key here please :)
+SECRET_KEY = "django-insecure-0#@q(ksj%@wbk*vio#oh_0xa&ose-9lh(r!le@^n5f7up!w-i4"#*add your own key here please :)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -126,6 +126,9 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT=(os.path.join(BASE_DIR,'PDFCollection'))
+MEDIA_URL = '/PDFCollection/'
 #*use Bootstrap 4 with crispy forms:
 CRISPY_TEMPLATE_PACK='bootstrap4'
 #*Redirect to the home page after login:

@@ -16,6 +16,11 @@
             <input type="submit" class="login-input btn btn-warning" value="Login!" />
         </div>
     </form>
+
+    <a class="text-muted" href="{% url 'pwd_reset' %}">
+         Forgot Password?
+     </a>
+
     {% include 'main/includes/messages.html' %}
 
 </div>

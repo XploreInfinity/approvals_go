@@ -10,7 +10,7 @@ class Post(models.Model):
     title=models.CharField(max_length=100)
     description=models.TextField(default="No Description",max_length=500)
     date_posted=models.DateTimeField(default=timezone.now)
-    PDFfile=models.FileField(upload_to='PDFCollection')
+    PDFfile=models.FileField(upload_to='')
     author=models.ForeignKey(User,on_delete=models.CASCADE)
     comments=models.TextField(default="No Comments",max_length=500)
     status=models.CharField(default='pending',max_length=10)
