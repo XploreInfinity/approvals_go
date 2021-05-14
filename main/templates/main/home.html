@@ -10,10 +10,10 @@
               <span class="mr-2">{{ post.author }}</span>
               <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="{% url 'view-post' post.id %}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.description }}</p>
+            <h2 class="font-roboto"><a class="article-title" href="{% url 'view-post' post.id %}">{{ post.title }}</a></h2>
+            <p class="article-content font-ubuntu">{{ post.description }}</p>
             <a href="{{ post.PDFfile.url }}" target="blank" class="article-title">
-                <img class="article-img" src="{% static 'main/img/pdf_ico.png' %}" alt="PDF file" />
+              <img class="article-img" src="{% static 'main/img/pdf_ico.png' %}" alt="PDF file" />
                 {{ post.PDFfile }}
             </a>
           </div>

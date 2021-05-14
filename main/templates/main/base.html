@@ -12,5 +12,11 @@
         {% include 'main/includes/navbar.html' %}
         {% block content %}
         {% endblock content %}
+
+        <script type="text/javascript">
+            function closeMessage(argument) {
+                document.getElementById("close-message").style.display="none";
+            }
+        </script>
     </body>
 </html>

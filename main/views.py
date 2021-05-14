@@ -1,4 +1,4 @@
-import unicodedata
+import unicodedata,os
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView,ListView,DetailView,UpdateView,DeleteView
 from .models import Post
@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .decorators import prevent_relogin,allowed_users
-from django.http import HttpResponse
+from django.http import HttpResponse,Http404,FileResponse
 #*Create your views here.
 @login_required
 @allowed_users(['HOD','faculty'])
@@ -113,7 +113,12 @@ class DocDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
         return False
 
 #*
-def PostActions(request):
-    if request.topple:
-        return  HttpResponse('<h1>Topple them!ye!</h1>')
-    return HttpResponse('No')
+@login_required
+def getPDF(request,PDFfile):
+    #check if there exists a post having this file in its PDFfile field:
+    post=Post.objects.filter(PDFfile=PDFfile).first()
+    #if not,raise a 404 error
+    if post is None:
+        raise Http404
+
+    return FileResponse(open(os.path.join(settings.MEDIA_ROOT,PDFfile), 'rb'), content_type='application/pdf')
