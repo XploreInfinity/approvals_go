@@ -12,6 +12,8 @@ urlpatterns=[
     path('post/<int:pk>/',views.PostDetailView.as_view(),name='view-post'),
     path('post/<int:pk>/update/',views.PostUpdateView.as_view(),name='update-post'),
     path('post/<int:pk>/delete/',views.PostDeleteView.as_view(),name='delete-post'),
+    path('post/<int:pk>/approve/',views.PostApproveView.as_view(),name='approve-post'),
+    path('post/<int:pk>/reject/',views.PostRejectView.as_view(),name='reject-post'),
     path('showhome',views.PostListView.as_view(),name='some-home'),
 
     path('PDFCollection/<str:PDFfile>',views.getPDF),

@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container pt-5">
+    <center>
+    <h2>Are you sure you want to approve the post "{{ object.title }}"?</h2>
+    <form method="POST" class="">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="submit" class="btn btn-outline-success" value="Yes,Approve" />
+            <a href="{% url 'view-post' object.id %}" class="btn btn-outline-secondary">Cancel </a>
+        </div>
+    </form>
+</center>
+</div>
+{% endblock content %}

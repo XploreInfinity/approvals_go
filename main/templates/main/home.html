@@ -3,8 +3,20 @@
 {% block content %}
 <div class='container pt-5'>
 {% include 'main/includes/messages.html' %}
+<!--Dropdown for filtering posts-->
+<div class="dropdown mb-3">
+  <button type="button" onclick=dropdown_toggle() class="btn btn-secondary dropdown-toggle">
+    All Posts
+  </button>
+  <div id="custom-dropdown-menu" class="dropdown-menu">
+    <div class="btn btn-outline-primary dropdown-item" onclick="filter('all')" >All</div>
+    <div class="dropdown-item" onclick="filter('approved')">Approved</div>
+    <div class="dropdown-item" onclick="filter('pending')">Pending</div>
+    <div class="dropdown-item" onclick="filter('rejected')">Rejected</div>
+  </div>
+</div>
 {% for post in posts %}
-        <article class="media content-section">
+        <article class="media content-section {{ post.status }} ">
           <div class="media-body">
             <div class="article-metadata">
               <span class="mr-2">{{ post.author }}</span>

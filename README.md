@@ -10,5 +10,5 @@
 `deactivate`\
 
 **Note:**\
-**SECURITY KEY IS NOT INCLUDED. CHANGE PASSWORD RESET EMAIL CREDENTIALS IN `settings.py`    BEFORE USE**\
-**This is an Alpha build :)**
+**SECURITY KEY IS NOT INCLUDED. CHANGE PASSWORD RESET SYSTEM'S EMAIL CREDENTIALS IN `settings.py`    BEFORE USE**\
+**This is Beta build v0.1 :)**

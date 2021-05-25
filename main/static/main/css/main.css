@@ -28,6 +28,16 @@
   font-family: Fjalla;
 }
 
+.rejected{
+  outline:solid 5px #ff0404b3;
+}
+.approved{
+  outline:solid 5px #8bc34a;
+}
+.comment{
+  outline:solid 2px #ff0404b3;
+}
+
 
 body {
     background: #fafafa;

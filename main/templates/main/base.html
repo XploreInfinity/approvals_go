@@ -4,8 +4,9 @@
     <head>
         <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'main/css/bootstrap-min.css' %}" />
-        <script src="{% static 'main/js/popper-min.js' %}" ></script>
         <script src="{% static 'main/js/jquery-min.js' %}" ></script>
+        <script src="{% static 'main/js/bs4-min.js' %}" ></script>
+        <script type="text/javascript" src="{% static 'main/js/main.js' %}"></script>
         <title>{{ title }}</title>
     </head>
     <body>
@@ -13,10 +14,6 @@
         {% block content %}
         {% endblock content %}
 
-        <script type="text/javascript">
-            function closeMessage(argument) {
-                document.getElementById("close-message").style.display="none";
-            }
-        </script>
+        
     </body>
 </html>

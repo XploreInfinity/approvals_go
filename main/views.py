@@ -16,7 +16,11 @@ from django.http import HttpResponse,Http404,FileResponse
 @login_required
 @allowed_users(['HOD','faculty'])
 def home(request):
-    context={'posts':Post.objects.all(),'title':'Home'}
+
+    posts=Post.objects.order_by('-date_posted')
+    if request.user.groups.all()[0].name=='faculty':
+        posts=Post.objects.filter(author=request.user).order_by('-date_posted')
+    context={'posts':posts,'title':'Home'}
     return render(request,'main/home.html',context)
 
 def log_out(request):
@@ -32,6 +36,10 @@ class PostListView(ListView):
 class PostDetailView(LoginRequiredMixin,DetailView):
     model=Post
     template_name='main/post_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_group'] = self.request.user.groups.all()[0].name
+        return context
 class PostCreateView(LoginRequiredMixin,CreateView):
     model=Post
     fields=['title','description','PDFfile']
@@ -68,7 +76,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
 class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model=Post
     fields=['title','description','PDFfile']
-    template_name='main/post_creation.html'
+    template_name='main/post_update.html'
     def test_func(self):
         post=self.get_object()
         if self.request.user==post.author:
@@ -87,6 +95,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         return None
     #*Add the current user as the author of this post,call custom PDF validator,then continue:
     def form_valid(self,form):
+        form.instance.status='pending'
         file_error=self.clean_content(form)
         if file_error is None:
             messages.success(self.request,'Post Updated Successfully!')
@@ -100,19 +109,42 @@ class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     success_url='/home'
     def test_func(self):
         post=self.get_object()
-        if self.request.user==post.author or self.request.user.groups.all()[0].name=='HOD':
-            return True
-        return False
-class DocDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
-    model=Post
-    template_name='main/doc_detail.html'
-    def test_func(self):
-        post=self.get_object()
-        if self.request.user==post.author or self.request.user.groups.all()[0].name=='HOD':
+        if (self.request.user==post.author or self.request.user.groups.all()[0].name=='HOD') and (post.status != 'approved'):
             return True
         return False
 
-#*
+
+class PostApproveView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model=Post
+    fields=[]
+    template_name='main/post_confirm_approve.html'
+    def test_func(self):
+        if self.request.user.groups.all()[0].name=='HOD':
+            return True
+        return False
+    #*since user clicked on the submit button,we'll assume the post has to be approved
+    def form_valid(self,form):
+            form.instance.status='approved'
+            messages.success(self.request,'Post Approved!')
+            return super().form_valid(form)
+
+
+class PostRejectView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model=Post
+    fields=['comments']
+    template_name='main/post_confirm_reject.html'
+    def test_func(self):
+        post=self.get_object()
+        if self.request.user.groups.all()[0].name=='HOD' and post.status!='approved':
+            return True
+        return False
+    #*Since user clicked on the submit button,we'll assume the post has to be rejected
+    def form_valid(self,form):
+            form.instance.status='rejected'
+            messages.success(self.request,'Post Rejected!')
+            return super().form_valid(form)
+
+#*Protection for pdf files(This view restricts pdf files to logged in users only):
 @login_required
 def getPDF(request,PDFfile):
     #check if there exists a post having this file in its PDFfile field:

@@ -3,13 +3,13 @@
 {% block content %}
 <div class='container pt-5'>
 {% include 'main/includes/messages.html' %}
-        <article class="media content-section">
+        <article class="media content-section {{ object.status }}">
           <div class="media-body">
             <div class="article-metadata">
               <span class="mr-2">{{ object.author }}</span>
               <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ object.title }}</a></h2>
+            <h2><span class="article-title">{{ object.title }}</span></h2>
             <p class="article-content">{{ object.description }}</p>
             <a href="{{ object.PDFfile.url }}" target="blank" class="article-title">
                 <img class="article-img" src="{% static 'main/img/pdf_ico.png' %}" alt="PDF file" />
@@ -18,11 +18,55 @@
           </div>
         </article>
         {% ifequal request.user object.author %}
-        <a class="btn btn-outline-info" href="{% url 'update-post' object.id %}">Update</a>
+          {% ifnotequal object.status 'approved' %}
+            <a class="btn btn-outline-info" href="{% url 'update-post' object.id %}">Update</a>
+            <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Delete</a>
+          {% endifnotequal %}
+        {% ifequal object.status 'approved' %}
+            <div class="alert alert-info">
+              This post was accepted. It can be viewed,but not modified or deleted.
+            </div>
         {% endifequal %}
-        <a class="btn btn-outline-success" href="{% url 'delete-post' object.id %}">Approve</a>
-        <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Reject</a>
+        {% ifequal object.status 'pending' %}
+            <div class="alert alert-info mt-3">
+              This post's approval is pending. Feel free to update or delete it.
+            </div>
+        {% endifequal %}
+        {% ifequal object.status 'rejected' %}
+          <div class="alert alert-info mt-3">
+            Oops!This post was rejected.You can either update it as specified in the following comment to be acceptable or delete it.
+            <div class="alert alert-secondary">
+            Comment:<br />  
+            {{ object.comments }}
+            </div>
+        </div>
+        {% endifequal %}
+        {% endifequal %}
+        {% ifequal user_group 'HOD'%}
+        {% ifnotequal object.status 'approved' %}
+        <a class="btn btn-outline-success" href="{% url 'approve-post' object.id %}">Approve</a>
+        {% ifnotequal object.status 'rejected' %}
+        <a class="btn btn-outline-secondary" href="{% url 'reject-post' object.id %}">Reject</a>
+        {% endifnotequal %}
         <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Delete</a>
+        {% endifnotequal %}
+
+        {% ifequal object.status 'approved' %}
+         <div class="alert alert-info mt-3">
+            You approved this post. It can be viewed,but not modified or deleted.
+         </div>
+        {% endifequal %}
+        {% ifequal object.status 'pending' %}
+        <div class="alert alert-info mt-3">
+          You haven't reviewed this post yet.You may approve it,reject it or delete it.
+        </div>
+       {% endifequal %}
+        {% ifequal object.status 'rejected' %}
+        <div class="alert alert-info mt-3">
+           You rejected this post.You may delete it, wait for the author to update it or if you change your mind,approve it.
+        </div>
+       {% endifequal %}
+        {% endifequal %}
         
 </div>
 {% endblock %}
