@@ -17,22 +17,22 @@
             </a>
           </div>
         </article>
-        {% ifequal request.user object.author %}
-          {% ifnotequal object.status 'approved' %}
+        {% if request.user == object.author %}
+          {% if object.status != 'approved' %}
             <a class="btn btn-outline-info" href="{% url 'update-post' object.id %}">Update</a>
             <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Delete</a>
-          {% endifnotequal %}
-        {% ifequal object.status 'approved' %}
+          {% endif %}
+        {% if object.status == 'approved' %}
             <div class="alert alert-info">
               This post was accepted. It can be viewed,but not modified or deleted.
             </div>
-        {% endifequal %}
-        {% ifequal object.status 'pending' %}
+        {% endif %}
+        {% if object.status == 'pending' %}
             <div class="alert alert-info mt-3">
               This post's approval is pending. Feel free to update or delete it.
             </div>
-        {% endifequal %}
-        {% ifequal object.status 'rejected' %}
+        {% endif %}
+        {% if object.status == 'rejected' %}
           <div class="alert alert-info mt-3">
             Oops!This post was rejected.You can either update it as specified in the following comment to be acceptable or delete it.
             <div class="alert alert-secondary">
@@ -40,33 +40,33 @@
             {{ object.comments }}
             </div>
         </div>
-        {% endifequal %}
-        {% endifequal %}
-        {% ifequal user_group 'HOD'%}
-        {% ifnotequal object.status 'approved' %}
+        {% endif %}
+        {% endif %}
+        {% if user_group == 'HOD'%}
+        {% if object.status != 'approved' %}
         <a class="btn btn-outline-success" href="{% url 'approve-post' object.id %}">Approve</a>
-        {% ifnotequal object.status 'rejected' %}
+        {% if object.status != 'rejected' %}
         <a class="btn btn-outline-secondary" href="{% url 'reject-post' object.id %}">Reject</a>
-        {% endifnotequal %}
+        {% endif %}
         <a class="btn btn-outline-danger" href="{% url 'delete-post' object.id %}">Delete</a>
-        {% endifnotequal %}
+        {% endif %}
 
-        {% ifequal object.status 'approved' %}
+        {% if object.status == 'approved' %}
          <div class="alert alert-info mt-3">
             You approved this post. It can be viewed,but not modified or deleted.
          </div>
-        {% endifequal %}
-        {% ifequal object.status 'pending' %}
+        {% endif %}
+        {% if object.status == 'pending' %}
         <div class="alert alert-info mt-3">
           You haven't reviewed this post yet.You may approve it,reject it or delete it.
         </div>
-       {% endifequal %}
-        {% ifequal object.status 'rejected' %}
+       {% endif %}
+        {% if object.status == 'rejected' %}
         <div class="alert alert-info mt-3">
            You rejected this post.You may delete it, wait for the author to update it or if you change your mind,approve it.
         </div>
-       {% endifequal %}
-        {% endifequal %}
+       {% endif %}
+        {% endif %}
         
 </div>
 {% endblock %}

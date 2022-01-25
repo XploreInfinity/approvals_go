@@ -2,3 +2,4 @@
 classroom_go/__pycache__
 main/__pycache__
 django_env
+.project_secrets

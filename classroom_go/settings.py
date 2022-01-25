@@ -155,7 +155,7 @@ MAX_UPLOAD_SIZE="104857600"
 #!INSTEAD OF USING PLAIN STRING VALUES FOR EMAIL AND PASSWORD,USE YOUR OS's ENVIRONMENT VARIABLES INSTEAD
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = ''#*add your own host please
-EMAIL_PORT = 0#*add your own port number please
+EMAIL_PORT =0#*add your own port number please
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = ''#*add your own email please
 EMAIL_HOST_PASSWORD = ''#*add your own password please
